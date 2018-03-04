@@ -1,21 +1,17 @@
-const screenExamples = require('./screenExamples')
+// Ignite CLI plugin for Ts
+// ----------------------------------------------------------------------------
 
-/**
- * Add the plugin.
- *
- * @param {any} context - The gluegun context.
- */
-async function add (context) {
-  await screenExamples.add(context)
+
+const add = async function (context) {
+  // No-op, as we do this all in `boilerplate.js`
 }
 
 /**
- * Remove the plugin.
- *
- * @param {any} context - The gluegun context.
+ * Remove yourself from the project.
  */
-async function remove (context) {
-  await screenExamples.remove(context)
+const remove = async function (context) {
+  // No-op, as we do this all in `boilerplate.js`  
 }
 
+// Required in all Ignite CLI plugins
 module.exports = { add, remove }

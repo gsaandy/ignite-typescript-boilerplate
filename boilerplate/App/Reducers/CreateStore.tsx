@@ -12,8 +12,9 @@ export default (rootReducer: Reducer<any>, rootSaga: () => SagaIterator) => {
   const enhancers = [];
 
   /* ------------- Analytics Middleware ------------- */
-  middleware.push(ScreenTracking);
-
+  if (Config.useReactotron) {
+    middleware.push(ScreenTracking);
+  }
   /* ------------- Saga Middleware ------------- */
 
   let opts = {};
@@ -30,7 +31,10 @@ export default (rootReducer: Reducer<any>, rootSaga: () => SagaIterator) => {
 
   // if Reactotron is enabled (default for __DEV__), we'll create the store through Reactotron
   const createAppropriateStore = Config.useReactotron ? Reactotron.createStore : createStore;
-  const store = createAppropriateStore(rootReducer, compose(...enhancers));
+
+  const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+  const store = createAppropriateStore(rootReducer, composeEnhancers(...enhancers));
 
   // kick off root saga
   const sagasManager = sagaMiddleware.run(rootSaga);

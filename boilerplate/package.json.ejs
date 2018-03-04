@@ -35,8 +35,8 @@
     "redux": "^3.6.0",
     "redux-persist": "^4.1.0",
     "redux-saga": "^0.15.6",
-    "reduxsauce": "0.4.1",
-    "seamless-immutable": "^7.0.1"
+    "seamless-immutable": "^7.0.1",
+    "typesafe-actions": "1.1.2"    
   },
   "devDependencies": {
     "@storybook/addon-storyshots": "^3.2.3",
@@ -81,7 +81,8 @@
   "jest": {
     "preset": "jest-preset-typescript-react-native",
     "testMatch": [
-      "**/Tests/**/*.ts?(x)"
+      "**/Tests/**/*.ts?(x)",
+      "**/App/**/*Test.ts?(x)"
     ],
     "testPathIgnorePatterns": [
       "\\.snap$",

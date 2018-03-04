@@ -1,17 +1,20 @@
-import { Action, Reducer } from "redux";
-import { createActions, createReducer } from "reduxsauce";
+import { Action, AnyAction, Reducer } from "redux";
 import * as SI from "seamless-immutable";
+import { createAction, PayloadAction } from "typesafe-actions";
+import { mapReducers, ReducerMap } from "../../Lib/ReduxHelpers";
 
 /* ------------- Types and Action Creators ------------- */
+interface RequestParams {username: string; }
+interface SuccessParams {avatar: string; }
+const actions = {
+  userRequest: createAction("githubUserRequest", (params: RequestParams) =>
+    ({type: "githubUserRequest", payload: params})),
+  userSuccess: createAction("githubUserSuccess", (params: SuccessParams) =>
+    ({type: "githubUserSuccess", payload: params})),
+  userFailure: createAction("githubUserFailure"),
+};
 
-const { Types, Creators } = createActions({
-  userRequest: ["username"],
-  userSuccess: ["avatar"],
-  userFailure: null,
-});
-
-export const GithubTypes = Types;
-export const GithubActions = Creators;
+export const GithubActions = actions;
 
 interface GithubState {
   avatar?: string | null;
@@ -20,7 +23,7 @@ interface GithubState {
   username?: string | null;
 }
 
-export type GithubAction = GithubState & Action;
+export type GithubAction = PayloadAction<string, GithubState>;
 
 export type ImmutableGithubState = SI.ImmutableObject<GithubState>;
 
@@ -36,25 +39,27 @@ export const INITIAL_STATE: ImmutableGithubState = SI.from({
 /* ------------- Reducers ------------- */
 
 // request the avatar for a user
-export const request: Reducer<ImmutableGithubState> = (state: ImmutableGithubState, { username }: GithubAction) =>
-  state.merge({ fetching: true, username, avatar: null });
+export const userRequest: Reducer<ImmutableGithubState> =
+  (state: ImmutableGithubState, { payload }: AnyAction & {payload?: RequestParams}) =>
+    payload ? state.merge({ fetching: true, username: payload.username, avatar: null }) : state;
 
 // successful avatar lookup
-export const success: Reducer<ImmutableGithubState> = (state: ImmutableGithubState, action: GithubAction) => {
-  const { avatar } = action;
-  return state.merge({ fetching: false, error: null, avatar });
-};
+export const userSuccess: Reducer<ImmutableGithubState> =
+  (state: ImmutableGithubState, { payload }: AnyAction & {payload?: SuccessParams}) =>
+  payload ? state.merge({ fetching: false, error: null, avatar: payload.avatar }) : state;
 
 // failed to get the avatar
-export const failure = (state: ImmutableGithubState) =>
+export const userFailure: Reducer<ImmutableGithubState> = (state: ImmutableGithubState) =>
   state.merge({ fetching: false, error: true, avatar: null });
 
 /* ------------- Hookup Reducers To Types ------------- */
 
-export const GithubReducer = createReducer(INITIAL_STATE, {
-  [Types.USER_REQUEST]: request,
-  [Types.USER_SUCCESS]: success,
-  [Types.USER_FAILURE]: failure,
-});
+const reducerMap: ReducerMap<typeof actions, ImmutableGithubState> = {
+  userRequest,
+  userSuccess,
+  userFailure,
+};
+
+export const GithubReducer = mapReducers(INITIAL_STATE, reducerMap, actions);
 
 export default GithubReducer;

@@ -1,14 +1,12 @@
-# Ignite TypeScript Boilerplate
+## Ignite TypeScript Boilerplate for React Native
 
-This is a work in progress, but is enough to get started with React Native development in TypeScript.
-
-## The great taste of Ignite, now in TypeScript
-
-A port of the [Ignite IR Boilerplate](https://github.com/infinitered/ignite-ir-boilerplate) to TypeScript.
+### The easiest way to develop React Native apps in TypeScript.
+Get up and running with TypeScript React Native development in minutes. A batteries-included, opinionated starter project, and code generators for your components, reducers, sagas and more. 
+Originally based on a port of the [Ignite IR Boilerplate](https://github.com/infinitered/ignite-ir-boilerplate) to TypeScript.
 
 Currently includes:
 
-* React Native 0.47.2 (but you can change this if you want to experiment)
+* React Native 0.51.0 (but you can change this if you want to experiment)
 * React Navigation
 * Redux
 * Redux Sagas
@@ -16,9 +14,9 @@ Currently includes:
 
 ## Quick Start
 
-When you've installed the [Ignite CLI](https://github.com/infinitered/ignite), you can get started with this boilerplate like this:
+When you've installed the [Ignite CLI](https://github.com/infinitered/ignite), (tl;dr: `npm install -g ignite-cli`) you can get started with this boilerplate like this:
 
-```
+```sh
 ignite new MyLatestCreation --b ignite-typescript-boilerplate
 ```
 
@@ -55,14 +53,17 @@ workspace settings. You can run the linter from the command line. `npm run lint`
 
 Your `App` folder is where most of the goodies are found in an Ignite app. Let's walk through them in more detail. Start with `Containers/App.tsx` (described below) and work your way down the walkthrough in order.
 
+### Components
+
+React components go here. We generate these as stateless functional components by default, as recommended by the React team.
+
 ### Containers
 
-Containers are (mostly) full screens, although they can be sections of screens or application containers.
+Containers are Redux-connected components, and are mostly full screens.
 
 * `App.tsx` - your main application. We create a Redux store and configure it here
 * `RootContainer.tsx` - main view of your application. Contains your status bar and navigation component
 * `LaunchScreen.tsx` - this is the first screen shown in your application. It's loaded into the Navigation component
-* `LoginScreen.tsx` - an example login screen. Read the comments in there to learn more!
 
 ### Navigation
 
@@ -71,13 +72,9 @@ Your primary and other navigation components reside here.
 * `AppNavigation.tsx` - loads in your initial screen and creates your menu(s) in a StackNavigation
 * `Styles` - styling for the navigation
 
-### Components
-
-React components go here. We generate these as stateless functional components by default, as recommended by the React team.
-
 ### Storybook
 
-[Storybook](https://storybook.js.org/) has been setup to show off components in the different states. Storybook is a great way to develop and test components outside of use in your app. Simply run `npm run storybook` to get started. All stores are contained in the `*.story.tsx` files along side the components.
+[Storybook](https://storybook.js.org/) has been setup to show off components in the different states. Storybook is a great way to develop and test components outside of use in your app. Simply run `yarn run storybook` to get started. All stories are contained in the `*.story.tsx` files along side the components.
 
 ### Themes
 
@@ -104,9 +101,9 @@ Contains json files that mimic API responses for quicker development. These are 
 
 ### Redux, Sagas
 
-Contains a preconfigured Redux and Redux-Sagas setup. Review each file carefully to see how Redux interacts with your application. You will find these in the Reducers and Sagas folders.
-
-_TODO: explain more about Redux & Redux Sagas here_
+Contains a preconfigured Redux and Redux-Sagas setup. Review each file carefully to see how Redux interacts with your application. You will find these in the Reducers and Sagas folders. We use [typesafe-actions](https://github.com/piotrwitek/typesafe-actions) to get lovely
+type checking of our reducers and actions. Take a look at `Lib/ReduxHelpers.ts` for some extra functions that
+we use to make them more Ignite-y.
 
 ### Services
 
@@ -131,24 +128,27 @@ Helpers for transforming data between API and your application and vice versa. A
 
 ### Tests
 
-We create Jest tests alongside the components, reducers and sagas. Currently you need to enable this by editing `ignite/ignite.json` and adding `"tests": "jest"`.
+We create Jest tests alongside the components, reducers and sagas. Enable this by adding `"tests": "jest"` to `ignite/ignite.json`.
 
 ### Code generation
 
 Currently, the following code generation commands work properly:
 * `ignite generate component MyComponent` - generates a stateless functional component.
-* `ignite generate container MyContainer` - generates a React.Component, with state and view lifecycle.
-* `ignite generate reducer MyReducer` - generates a set of Redux reducers.
+* `ignite generate container MyContainer` - generates a Redux-connected React.Component, with state and view lifecycle.
+* `ignite generate screen MyScreen` - generates a Redux-connected React.Component, with state, view lifecycle and react-navigation.
+* `ignite generate reducers MyNew` - generates a set of Redux reducers.
 * `ignite generate saga MySaga` - generates a Redux Saga
-
-The remaining commands have not yet been ported to TypeScript, but will be soon.
+* `ignite generate list MyList` - generates a FlatList, formatted either as a grid or list.
 
 ### Further reading
 
-A comprehensive guide to best practice with TypeScript in React is [the React Redux TypeScript Guide](https://github.com/piotrwitek/react-redux-typescript-guide), which covers a lot more than just Redux. We have adopted a lot of the patterns from this.
+A comprehensive guide to best practice with TypeScript in React is [the React Redux TypeScript Guide](https://github.com/piotrwitek/react-redux-typescript-guide), which covers a lot more than just Redux. We have adopted a lot of the patterns from this. The `typesafe-actions` library that we use was created by @piotrwitek, the author of the guide.
 
 Microsoft created [TypeScript React Native Starter](https://github.com/Microsoft/TypeScript-React-Native-Starter), which includes a walkthrough on switching projects to TypeScript.
 
 [React TypeScript Tutorial](https://github.com/DanielRosenwasser/React-TypeScript-Tutorial) is React rather than React Native, but has useful guides.
 
-[This post](http://blog.novanet.no/easy-typescript-with-react-native/) is a good run-through of the [react-native-typescript-transfomer](https://github.com/ds300/react-native-typescript-transformer), which allows us to skip the transpile step that we were using before. Thanks @wormyy for the heads-up on this.
+[This post](http://blog.novanet.no/easy-typescript-with-react-native/) is a good run-through of the [react-native-typescript-transfomer](https://github.com/ds300/react-native-typescript-transformer), which allows us to skip the transpile step that we were using before. Thanks [@wormyy] for the heads-up on this.
+
+### Credits
+Created by [Matt Kane](https://github.com/ascorbic) at [Aerian Studios](https://www.aerian.com). Based on [Ignite IR Boilerplate](https://github.com/infinitered/ignite-ir-boilerplate), by Infinite Red. 

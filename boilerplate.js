@@ -35,13 +35,51 @@ async function install (context) {
     template
   } = context
   const { colors } = print
-  const { red, yellow, bold, gray, blue } = colors
+  const { red, yellow, bold, gray, blue, green } = colors
 
   const perfStart = (new Date()).getTime()
 
   const name = parameters.third
+  const logo = red(`
+
+
+                -aeaeaeaeaeae—             
+            -eaeaeaeaeaeaeaeaeaeae-            
+         /aeaeaeaeaeaeaeaeaeaeaeaeae\\         
+       /aeaeaeaeaeaeaeaeaeaeaeaeaeaeae\\       
+     /eaeaeaeaeaeaeaeaeaeaeaeaeaeaeaeaea\\       
+    /aeaeaeaeaeaeaeaeaeaea/ |aeaeaeaeaeae\\      
+   /aaeaeaeaeaeaeaeaeaeae/  |aeaeaeaeaeaea\\     
+   aeaeaeaeaeaeaeaeaeae/    |eaeaeaeaeaeaea    
+  |aeaeaeaeaeaeaeaeae/      |eaeaeaeaeaeaea|    
+  aeaeaeaeaeaeaeaea/        |eaeaeaeaeaeaeae    
+  eaeaeaeaeaeaeae/`) + yellow(`:`) + red(`\\        |aeaeaeaeaeaeaea    
+  aeaeaeaeaeaea/`) + yellow(`::::`) + red(`\\       |eaeaeaeaeaeaeae    
+  |aeaeaeaeae/`) + yellow(`:::::::`) + red(`\\      |eaeaeaeaeaeaea|    
+   aeaeaeaeaeaeaeaeaea\\     |`) + yellow(`::::`) + red(`/aeaeaeaea   
+   \\eaeaeaeaeaeaeaeaeaea\\   |`) + yellow(`:::`) + red(`/aeaeaeaea/     
+    \\aeaeaeaeaeaeaeaeaeae\\  |`) + yellow(`::`) + red(`/aeaeaeaea/      
+     \\aeaeaeaeaeaeaeaeaeae\\ |`) + yellow(`:`) + red(`/eaeeaeaea/       
+       \\aeaeaeaeaeaeaeaeaea\\|/aeaeaeae/       
+         \\aeaeaeaeaeaeaeaeaeaeaeaeae/         
+            -eaeaeaeaeaeaeaeaeaeae-            
+                -aeaeaeaeaeae—      
+
+           __ _  ___ _ __ _  __ _ _ __  
+          / _' |/ _ \\ '__| |/ _' | '_ \\ 
+         | (_| |  __/ |  | | (_| | | | |
+          \\__,_|\\___|_|  |_|\\__,_|_| |_|
+
+`) + green(`
+    🌳   Crafted with care in the Cotswolds.  🌳`) + yellow(`
+
+                https://aerian.com/    
+
+`);
+  
+  print.info(logo)
   const spinner = print
-    .spin(`using the TypeScript boilerplate. You might want to make a cuppa while we get this ready. ☕️`)
+    .spin(`using the TypeScript boilerplate from Aerian Studios. You might want to make a cuppa while we get this ready. ☕️`)
     .succeed()
 
   // attempt to install React Native or die trying
@@ -240,12 +278,11 @@ async function install (context) {
       react-native run-android${androidInfo}
       ignite --help
 
-    ${gray('Read the walkthrough at https://github.com/infinitered/ignite-ir-boilerplate/blob/master/readme.md#boilerplate-walkthrough')}
-
-    ${blue('Need additional help? Join our Slack community at http://community.infinite.red.')}
+    ${gray('Read the walkthrough at https://github.com/aerian-studios/ignite-typescript-boilerplate/blob/master/readme.md#boilerplate-walkthrough')}
 
     ${bold('Now get cooking! 🍽')}
   `
+
 
   print.info(successMessage)
 }
